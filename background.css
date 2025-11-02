@@ -1,0 +1,6 @@
+body {
+    background: linear-gradient(to right bottom, #0b8c2b, rgb(0, 255, 89), rgb(12, 190, 9), rgb(29, 181, 57));
+    background-image: url("https://i.postimg.cc/XJV74XNV/Green-leaves-background.jpg");
+    background-repeat: no-repeat; /* repeat is default */
+    background-size: cover;
+}

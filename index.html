@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terralytics - Analyzing your Geological Landscape</title>
+    
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./locationComponents.css">
+    <link rel="stylesheet" href="./background.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Import Markdown Library -->
+</head>
+<body>
+    <h1>Terralytics</h1>
+
+    <div id="locationComponentsDiv">
+      <!-- Detection Location -->
+      <div id="detectLocationDiv">
+        <button id="detectLocationButton">Detect Location</button>
+        <label id="detectedLatLabel">Latitude: </label>
+        <label id="detectedLongLabel">Longitude: </label>
+      </div>
+
+      <!-- Manual Location -->
+      <div id="manualLocationDiv">
+        <h3 id="manualLocationTitle">Input Location Manually</h3>
+        <div id="latInputDiv">
+          <label>Latitude</label>
+          <input type="text" id="latInput">
+        </div>
+        <div id="longInputDiv">
+          <label>Longitude</label>
+          <input id="longInput">
+        </div>
+        <button id="submitButton">Submit</button>
+      </div>
+    </div>
+
+    <div id="buttonGrid">
+      <div>
+        <button>Rocks, Gems, and Minerals in Your Area</button>
+        <label></label>
+      </div>
+      <div>
+        <button>Top Five Most Valuable Rocks and Where to Find Them</button>
+        <label></label>
+      </div>
+      <div>
+        <button>Caves and Cave Structures</button>
+        <label></label>
+      </div>
+      <div>
+        <button>Places Open to Mine</button>
+        <label></label>
+      </div>
+      <div>
+        <button>Mining Operations Nearby</button>
+        <label></label>
+      </div>
+  </div>
+
+  <script src="./location.js" type="module"></script>
+  <script src="./aiRquesting.js" type="module"></script>
+</body>
+</html>

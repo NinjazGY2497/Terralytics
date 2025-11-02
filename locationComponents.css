@@ -1,0 +1,41 @@
+/* All */
+#locationComponentsDiv {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+/* Detect Location */
+#detectLocationDiv {
+    padding: 10px;
+    gap: 5px;
+    border: 3px solid black;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Manual Location */
+#manualLocationTitle {
+    margin: 0;
+}
+
+#manualLocationDiv {
+    padding: 10px;
+    gap: 5px;
+    border: 3px solid black;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#latInputDiv, #longInputDiv {
+    padding: 5px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
