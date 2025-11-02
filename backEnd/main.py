@@ -2,7 +2,7 @@ from google import genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-client = genai.Client(api_key="AIzaSyBHIgYWExSlhw-mEqUdRz4BFwfho9mFfiw")
+client = genai.Client(api_key="<REDACTED_SECRET>")
 
 app = Flask(__name__)
 
@@ -32,3 +32,4 @@ def getAIResponse():
 
 if __name__ == "__main__":
     app.run(port="2497")
+
