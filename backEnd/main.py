@@ -2,7 +2,13 @@ from google import genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-client = genai.Client(api_key="<REDACTED_SECRET>")
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+apiKey = os.getenv("API_KEY")
+
+client = genai.Client(api_key=apiKey)
 
 app = Flask(__name__)
 
@@ -12,7 +18,9 @@ CORS(app, resources={
         "origins": [
             "http://127.0.0.1:5500",
             "http://localhost:5500",
-            "https://terralytics.edgeone.app"
+            "https://terralytics.edgeone.app",
+            "https://solid-adventure-wr9gvwgp5vr4cv55g-5500.app.github.dev"
+            "postman.co"
         ]
     }
 })
@@ -22,6 +30,7 @@ def getAIResponse():
     promptData = request.get_json()
     model = promptData.get("model", "gemini-2.5-flash") # Default is gemini-2.5-flash
     prompt = promptData.get("prompt")
+    print("THIS IS THE STUFF")
     print(model, prompt)
 
     response = client.models.generate_content(
