@@ -7,3 +7,4 @@ TODO LIST:
 - Google maps embed
 - Better prompt injection counter
 - Radius?
+- Make button disappear when submitted changes and appear when un-submitted changes for manual location
