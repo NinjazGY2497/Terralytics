@@ -1,0 +1,7 @@
+TODO LIST:
+- Custom prompt using coords/location
+- Location name, not just latLong
+- Google maps embed
+- Better prompt injection counter
+- Radius?
+- Make button disappear when submitted changes and appear when un-submitted changes for manual location
