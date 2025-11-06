@@ -33,13 +33,13 @@ def getAIResponse():
     promptData = request.get_json()
     model = promptData.get("model", "gemini-2.5-flash") # Default is gemini-2.5-flash
     prompt = promptData.get("prompt")
-    print("Prompt Data:", promptData)
+    print("INFO: Prompt Data:", promptData)
 
     response = client.models.generate_content(
         model=model,
         contents=prompt
     )
-    print("AI Response:", response.text)
+    print("INFO: AI Response:", response.text)
 
     return jsonify({"response": response.text})
 
