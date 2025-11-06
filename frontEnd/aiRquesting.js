@@ -39,7 +39,7 @@ buttonGrid.forEach(button => {
 });
 
 async function aiResponse(prompt) {
-  const flaskServerUrl = "https://hackathoncrewraag.pythonanywhere.com/ai-response"
+  const flaskServerUrl = "http://127.0.0.1:2497/ai-response";
   const sendingData = {
     prompt: prompt
   };
