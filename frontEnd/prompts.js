@@ -8,10 +8,6 @@ buttonGrid.forEach(button => {
   const topic = button.textContent;
 
   button.addEventListener("click", async function() {
-    // Add Border
-    const parentDiv = button.parentElement;
-    parentDiv.style.border = "5px solid #0000002a";
-
     // Latitude & Longitude (read values at time of click)
     const { lat: latitude, long: longitude } = currentCoords;
 
@@ -21,7 +17,11 @@ buttonGrid.forEach(button => {
       return;
     }
 
-    // AI
+    // Add Border
+    const parentDiv = button.parentElement;
+    parentDiv.style.border = "5px solid #0000002a";
+
+    // AI Prompt
     label.textContent = "Loading AI insights...";
 
     try {
