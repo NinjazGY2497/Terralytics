@@ -1,6 +1,5 @@
 TODO LIST:
 - Custom prompt using coords/location
-- Location name, not just latLong
 - Google maps embed
 - Better prompt injection counter
 - Radius?
