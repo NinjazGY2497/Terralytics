@@ -3,20 +3,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 import os
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
-load_dotenv(find_dotenv())
+load_dotenv()
 
 # Gemini API
 apiKey = os.getenv("API_KEY")
 client = genai.Client(api_key=apiKey)
 
-# Get allowed origins from env file
-allowedOriginsStr: str = os.getenv("CORS_ALLOWED_ORIGINS")
-
-ALLOWED_ORIGINS = []
-if allowedOriginsStr:
-    ALLOWED_ORIGINS = [origin.strip() for origin in allowedOriginsStr.split(',')]
+# CORS allowed origins
+ALLOWED_ORIGINS = ["http://127.0.0.1:5500", "http://localhost:5500", "https://terralytics.edgeone.app"] # Don't keep localhost urls in production
 
 app = Flask(__name__)
 
