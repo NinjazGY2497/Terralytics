@@ -1,5 +1,5 @@
 export async function aiResponse(prompt) {
-  const flaskServerUrl = "http://127.0.0.1:2497/ai-response";
+  const flaskServerUrl = "hackathonCrewRAAG.pythonanywhere.com/aiResponse";
   const sendingData = {
     prompt: prompt
   };
