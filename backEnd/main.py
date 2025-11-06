@@ -24,7 +24,7 @@ CORS(app, resources={
             "http://127.0.0.1:5500",
             "http://localhost:5500",
             "https://terralytics.edgeone.app",
-            "github.dev" # Remove this line in actual backend code
+            "https://solid-adventure-wr9gvwgp5vr4cv55g-5500.app.github.dev"
         ]
     }
 })
