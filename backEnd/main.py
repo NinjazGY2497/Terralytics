@@ -3,22 +3,25 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-workingDir = os.getcwd()
-projectDir = "backEnd" # Replace with project directory
-envPath = os.path.join(workingDir, projectDir, '.env')
-print("Environment File Path:", envPath)
+load_dotenv(find_dotenv())
 
-load_dotenv(envPath)
+# Gemini API
 apiKey = os.getenv("API_KEY")
-
 client = genai.Client(api_key=apiKey)
+
+# Get allowed origins from env file
+allowedOriginsStr: str = os.getenv("CORS_ALLOWED_ORIGINS")
+
+ALLOWED_ORIGINS = []
+if allowedOriginsStr:
+    ALLOWED_ORIGINS = [origin.strip() for origin in allowedOriginsStr.split(',')]
 
 app = Flask(__name__)
 
-# Whitelist all sites for CORS
-CORS(app)
+# Whitelist sites specified
+CORS(app, resources={r"/ai-response": {"origins": ALLOWED_ORIGINS}})
 
 @app.route("/ai-response", methods=["POST"])
 def getAIResponse():
