@@ -5,20 +5,19 @@ from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 
-workingDir = os.getcwd()
-projectDir = "backEnd" # Replace with project directory
-envPath = os.path.join(workingDir, projectDir, '.env')
-print("Environment File Path:", envPath)
+load_dotenv()
 
-load_dotenv(envPath)
+# Gemini API
 apiKey = os.getenv("API_KEY")
-
 client = genai.Client(api_key=apiKey)
+
+# CORS allowed origins
+ALLOWED_ORIGINS = ["http://127.0.0.1:5500", "http://localhost:5500", "https://terralytics.edgeone.app"] # Don't keep localhost urls in production
 
 app = Flask(__name__)
 
-# Whitelist all sites for CORS
-CORS(app)
+# Whitelist sites specified
+CORS(app, resources={r"/ai-response": {"origins": ALLOWED_ORIGINS}})
 
 @app.route("/ai-response", methods=["POST"])
 def getAIResponse():
