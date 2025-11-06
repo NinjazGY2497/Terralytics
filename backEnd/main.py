@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 workingDir = os.getcwd()
-projectDir = "Terralytics/backEnd" # Replace with project directory
+projectDir = "backEnd" # Replace with project directory
 envPath = os.path.join(workingDir, projectDir, '.env')
 print("Environment File Path:", envPath)
 
@@ -17,16 +17,8 @@ client = genai.Client(api_key=apiKey)
 
 app = Flask(__name__)
 
-# Sites whitelisted to POST to backend
-CORS(app, resources={
-    r"/ai-response": {
-        "origins": [
-            "http://127.0.0.1:5500",
-            "http://localhost:5500",
-            "https://terralytics.edgeone.app"
-        ]
-    }
-})
+# Whitelist all sites for CORS
+CORS(app)
 
 @app.route("/ai-response", methods=["POST"])
 def getAIResponse():
