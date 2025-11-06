@@ -1,3 +1,5 @@
+import { aiResponse } from "./aiResponse.js";
+
 const detectedLatLabel = document.querySelector("#detectedLatLabel")
 const detectedLongLabel = document.querySelector("#detectedLongLabel")
 const detectLocationButton = document.querySelector("#detectLocationButton")
@@ -19,7 +21,7 @@ function showButtonGrid() {
     buttonGrid.style.display = "flex";
 }
 
-// Location Funcs
+// Detect Location Funcs
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -34,6 +36,8 @@ function showPosition(position) {
 
     detectedLatLabel.textContent = `Latitude: ${currentCoords.lat}`;
     detectedLongLabel.textContent = `Longitude: ${currentCoords.long}`;
+
+    promptYourLocation();
 }
 
 function showError(error) {
@@ -58,8 +62,10 @@ function showError(error) {
     }
 
     alert(errorResponse);
+    promptYourLocation();
 }
 
+// Event Listeners
 detectLocationButton.addEventListener("click", function() {
     getLocation();
     showButtonGrid();
@@ -70,4 +76,36 @@ submitButton.addEventListener("click", function() {
     currentCoords.long = longInput.value;
     
     showButtonGrid();
+    promptYourLocation();
 })
+
+// AI "Your Location" Prompt
+async function promptYourLocation() {
+    const label = document.querySelector("#yourLocationP");
+    const {lat: lat, long: long} = currentCoords;
+
+    // Accept 0 as valid coordinate; only reject undefined/null/empty string
+    if (lat == null || long == null || lat === '' || long === '') {
+      label.innerHTML = "Please enter or detect your location.";
+      return;
+    }
+
+    // AI Prompt
+    label.textContent = "Loading AI insights...";
+
+    try {
+        const response = await aiResponse(
+        `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/location, this is not a chatbot.\
+        You also do not need to restate the question. Respond like you are talking to the user.\
+        Here's the Latitude & Longitude coordinates: lat="${lat}", long="${long}".\
+        State the user's location & region based on the LatLong coordinates IN ONE SENTENCE.`
+        );
+
+        const markdownResponse = response ? marked.parse(response) : '';
+        label.innerHTML = markdownResponse || "No response from Gemini.";
+
+    } catch (error) {
+        console.error(error);
+        label.textContent = "Error contacting AI.";
+    }
+}

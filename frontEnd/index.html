@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terralytics - Analyzing your Geological Landscape</title>
     
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./locationComponents.css">
-    <link rel="stylesheet" href="./background.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/background.css">
+    <link rel="stylesheet" href="./css/locationComponents.css">
+    <link rel="stylesheet" href="./css/yourLocation.css">
+    <link rel="stylesheet" href="./css/buttonGrid.css">
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Import Markdown Library -->
 </head>
@@ -37,13 +39,22 @@
       </div>
     </div>
 
+    <!-- Your Location -->
+    <div id="yourLocationDiv">
+        <p id="yourLocationText">
+          <span id="yourLocationTitle">Your Location:</span>
+          <span id="yourLocationP">None</span>
+        </p>
+    </div>
+    
+    <!-- Button Grid -->
     <div id="buttonGrid">
       <div>
-        <button>Rocks, Gems, and Minerals in Your Area</button>
+        <button>Rocks, Gems, and Minerals</button>
         <label></label>
       </div>
       <div>
-        <button>Top Five Most Valuable Rocks and Where to Find Them</button>
+        <button>Top 5 Most Valuable Rocks and Where to Find Them</button>
         <label></label>
       </div>
       <div>
@@ -61,6 +72,7 @@
   </div>
 
   <script src="./location.js" type="module"></script>
-  <script src="./aiRquesting.js" type="module"></script>
+  <script src="./aiResponse.js" type="module"></script>
+  <script src="./prompts.js" type="module"></script>
 </body>
 </html>
