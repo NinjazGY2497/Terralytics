@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 workingDir = os.getcwd()
-projectDir = "Terralytics/backEnd" # Replace with project directory
+projectDir = "backEnd" # Replace with project directory
 envPath = os.path.join(workingDir, projectDir, '.env')
 print("Environment File Path:", envPath)
 
@@ -23,8 +23,7 @@ CORS(app, resources={
         "origins": [
             "http://127.0.0.1:5500",
             "http://localhost:5500",
-            "https://terralytics.edgeone.app",
-            "https://solid-adventure-wr9gvwgp5vr4cv55g-5500.app.github.dev"
+            "https://terralytics.edgeone.app"
         ]
     }
 })
