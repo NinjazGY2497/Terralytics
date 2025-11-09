@@ -25,8 +25,7 @@ buttonGrid.forEach(button => {
     // Get AI Response
     const flaskServerUrl = "https://hackathoncrewraag.pythonanywhere.com/ai-response"
     const sendingData = {
-      latLong: {latitude, longitude},
-      prompt: topic
+      prompt: `Here's the Latitude & Longitude coordinates: ${latitude}, ${longitude}. Answer the prompt based on the LatLong coordinates, and answer SIMPLIFIED: Info on ${topic}`
     };
 
     try {
