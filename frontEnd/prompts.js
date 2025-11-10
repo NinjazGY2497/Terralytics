@@ -1,4 +1,4 @@
-import { currentCoords } from './location.js';
+import { currentCoords, isLocationInfoNeeded } from './location.js';
 import { aiResponse } from "./aiResponse.js";
 
 const buttonGrid = document.querySelectorAll("#buttonGrid button");
@@ -11,10 +11,10 @@ buttonGrid.forEach(button => {
     // Latitude & Longitude (read values at time of click)
     const { lat: latitude, long: longitude } = currentCoords;
 
-    // Accept 0 as valid coordinate; only reject undefined/null/empty string
-    if (latitude == null || longitude == null || latitude === '' || longitude === '') {
-      alert("Please enter or detect your location first.");
-      return;
+    // Don't continue if not enough location info
+    if (isLocationInfoNeeded()) {
+        label.innerHTML = "Please enter or detect your location.";
+        return;
     }
 
     // Add Border

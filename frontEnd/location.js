@@ -6,6 +6,7 @@ const detectLocationButton = document.querySelector("#detectLocationButton")
 
 const latInput = document.querySelector("#latInput")
 const longInput = document.querySelector("#longInput")
+const locationNameInput = document.querySelector("#locationNameInput")
 const submitButton = document.querySelector("#submitButton")
 
 const buttonGrid = document.querySelector("#buttonGrid")
@@ -14,7 +15,8 @@ let currentCoords = {
     lat: undefined,
     long: undefined
 };
-export { currentCoords };
+let currentLocationName;
+export { currentCoords, currentLocationName };
 
 // Show Grid
 function showButtonGrid() {
@@ -74,20 +76,31 @@ detectLocationButton.addEventListener("click", function() {
 submitButton.addEventListener("click", function() {
     currentCoords.lat = latInput.value;
     currentCoords.long = longInput.value;
+    currentLocationName = locationNameInput.value;
     
     showButtonGrid();
     promptYourLocation();
 })
+
+// Enough Info? (Ex: does system have lat/long or location name?)
+function isLocationInfoNeeded() {
+    const {lat: lat, long: long} = currentCoords;
+    const isLatLongBlank = lat == null || lat === '' || long == null || long === '';
+    const isLocationNameBlank = currentLocationName == null || currentLocationName === '';
+
+    return isLatLongBlank && isLocationNameBlank;
+}
+export { isLocationInfoNeeded };
 
 // AI "Your Location" Prompt
 async function promptYourLocation() {
     const label = document.querySelector("#yourLocationP");
     const {lat: lat, long: long} = currentCoords;
 
-    // Accept 0 as valid coordinate; only reject undefined/null/empty string
-    if (lat == null || long == null || lat === '' || long === '') {
-      label.innerHTML = "Please enter or detect your location.";
-      return;
+    // Don't continue if not enough location info
+    if (isLocationInfoNeeded()) {
+        label.innerHTML = "Please enter or detect your location.";
+        return;
     }
 
     // AI Prompt
@@ -95,10 +108,10 @@ async function promptYourLocation() {
 
     try {
         const response = await aiResponse(
-        `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/location, this is not a chatbot.\
-        You also do not need to restate the question. Respond like you are talking to the user.\
-        Here's the Latitude & Longitude coordinates: lat="${lat}", long="${long}".\
-        State the user's location & region based on the LatLong coordinates IN ONE SENTENCE.`
+            `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/location, this is not a chatbot.\
+            You also do not need to restate the question. Respond like you are talking to the user.\
+            Here's the Latitude & Longitude coordinates: lat="${lat}", long="${long}".\
+            State the user's location & region based on the LatLong coordinates IN ONE SENTENCE.`
         );
 
         const markdownResponse = response ? marked.parse(response) : '';
