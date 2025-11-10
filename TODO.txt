@@ -1,0 +1,7 @@
+TODO LIST:
+- Terralytics Legacy link
+- Custom prompt using coords/location
+- Google maps embed
+- Better prompt injection counter
+- Radius?
+- Make button disappear when submitted changes and appear when un-submitted changes for manual location
