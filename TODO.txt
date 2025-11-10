@@ -1,5 +1,4 @@
 TODO LIST:
-- Terralytics Legacy link
 - Custom prompt using coords/location
 - Google maps embed
 - Better prompt injection counter
