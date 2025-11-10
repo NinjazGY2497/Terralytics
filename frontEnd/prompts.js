@@ -1,4 +1,4 @@
-import { currentCoords, isLocationInfoNeeded } from './location.js';
+import { locationInfo, isLocationInfoNeeded } from './location.js';
 import { aiResponse } from "./aiResponse.js";
 
 const buttonGrid = document.querySelectorAll("#buttonGrid button");
@@ -9,7 +9,7 @@ buttonGrid.forEach(button => {
 
   button.addEventListener("click", async function() {
     // Latitude & Longitude (read values at time of click)
-    const { lat: latitude, long: longitude } = currentCoords;
+    const {lat, long, locationName} = locationInfo;
 
     // Don't continue if not enough location info
     if (isLocationInfoNeeded()) {
@@ -26,10 +26,10 @@ buttonGrid.forEach(button => {
 
     try {
       const response = await aiResponse(
-        `Remember that this is for a project that will use you for one response only each time the user clicks a button, this is not a chatbot.\
-        Also remember that the user is already provided with the name of their location, so you do not need to re-specify that.
-        Here's the Latitude & Longitude coordinates: lat="${latitude}", long="${longitude}".\
-        Answer this prompt based on the LatLong coordinates SIMPLIFIED: Info on ${topic} in my area`
+        `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/locationName, this is not a chatbot.\
+        The user is required to input latLong coordinates or a location name, but doesn't have to give both. No need to mention if latLong or locationName is blank, only need to if both are blank.\
+        Here's the location info: (lat="${lat}", long="${long}"), locationName="${locationName}".\
+        Answer this prompt based on the latLong coordinates, location name, or both, SIMPLIFIED: Info on ${topic} in my area`
       );
 
       const markdownResponse = response ? marked.parse(response) : '';
