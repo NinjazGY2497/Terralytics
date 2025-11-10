@@ -39,11 +39,15 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    
 }
 
-#latInputDiv > *, #longInputDiv > *, #locationNameInputDiv > * {
+#latInputDiv > *, #longInputDiv > *, #locationNameInputDiv > * { /* So inputs grow as much as possbile */
     flex: 1;
+}
+
+#manualLocationDiv label { /* So labels don't take up extra space */
+    flex: 0 0 auto;
+    margin-right: 5px;
 }
 
 /* Manual Location Name */
