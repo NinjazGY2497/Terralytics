@@ -41,7 +41,7 @@
     gap: 5px;
 }
 
-#latInputDiv > *, #longInputDiv > *, #locationNameInputDiv > * { /* So inputs grow as much as possbile */
+#latInputDiv > *, #longInputDiv > *, #locationNameInputDiv > * { /* So inputs grow as much as possible */
     flex: 1;
 }
 
@@ -60,4 +60,9 @@
 
 #locationNameInputDiv {
     font-size: 0.9em;
+}
+
+/* Submit Button */
+#submitButton {
+    margin-top: 3px;
 }
