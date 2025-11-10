@@ -17,11 +17,16 @@
     justify-content: center;
 }
 
-/* Manual Location */
-#manualLocationTitle {
-    margin: 0;
+#detectLocationDiv h3 {
+    margin: 3px;
+    text-align: center;
 }
 
+#detectLocationDiv label {
+    margin-top: 3px;
+}
+
+/* Manual Location */
 #manualLocationDiv {
     padding: 10px;
     gap: 5px;
@@ -30,12 +35,44 @@
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
-#latInputDiv, #longInputDiv {
+#latInputDiv, #longInputDiv, #locationNameInputDiv {
     padding: 5px;
 
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+#latInputDiv > *, #longInputDiv > *, #locationNameInputDiv > * { /* So inputs grow as much as possible */
+    flex: 1;
+}
+
+#manualLocationDiv label { /* So labels don't take up extra space */
+    flex: 0 0 auto;
+    margin-right: 5px;
+}
+
+#manualLocationDiv h3 {
+    margin: 0;
+    text-align: center;
+}
+
+/* Manual Location Name */
+#manualLocationDiv p { /* This is the OR */
+    font-size: 0.6em;
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+#locationNameInputDiv {
+    font-size: 0.9em;
+}
+
+/* Submit Button */
+#submitButton {
+    margin-top: 3px;
 }

@@ -6,15 +6,17 @@ const detectLocationButton = document.querySelector("#detectLocationButton")
 
 const latInput = document.querySelector("#latInput")
 const longInput = document.querySelector("#longInput")
+const locationNameInput = document.querySelector("#locationNameInput")
 const submitButton = document.querySelector("#submitButton")
 
 const buttonGrid = document.querySelector("#buttonGrid")
 
-let currentCoords = {
+let locationInfo = {
     lat: undefined,
-    long: undefined
+    long: undefined,
+    locationName: undefined
 };
-export { currentCoords };
+export { locationInfo };
 
 // Show Grid
 function showButtonGrid() {
@@ -31,11 +33,11 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    currentCoords.lat = position.coords.latitude;
-    currentCoords.long = position.coords.longitude;
+    locationInfo.lat = position.coords.latitude;
+    locationInfo.long = position.coords.longitude;
 
-    detectedLatLabel.textContent = `Latitude: ${currentCoords.lat}`;
-    detectedLongLabel.textContent = `Longitude: ${currentCoords.long}`;
+    detectedLatLabel.textContent = `Latitude: ${locationInfo.lat}`;
+    detectedLongLabel.textContent = `Longitude: ${locationInfo.long}`;
 
     promptYourLocation();
 }
@@ -72,22 +74,33 @@ detectLocationButton.addEventListener("click", function() {
 });
 
 submitButton.addEventListener("click", function() {
-    currentCoords.lat = latInput.value;
-    currentCoords.long = longInput.value;
+    locationInfo.lat = latInput.value;
+    locationInfo.long = longInput.value;
+    locationInfo.locationName = locationNameInput.value;
     
     showButtonGrid();
     promptYourLocation();
 })
 
+// Enough Info? (Ex: does system have lat/long or location name?)
+function isLocationInfoNeeded() {
+    const {lat, long, locationName} = locationInfo;
+    const isLatLongBlank = lat == null || lat === '' || long == null || long === '';
+    const isLocationNameBlank = locationName == null || locationName === '';
+
+    return isLatLongBlank && isLocationNameBlank;
+}
+export { isLocationInfoNeeded };
+
 // AI "Your Location" Prompt
 async function promptYourLocation() {
     const label = document.querySelector("#yourLocationP");
-    const {lat: lat, long: long} = currentCoords;
+    const {lat, long, locationName} = locationInfo;
 
-    // Accept 0 as valid coordinate; only reject undefined/null/empty string
-    if (lat == null || long == null || lat === '' || long === '') {
-      label.innerHTML = "Please enter or detect your location.";
-      return;
+    // Don't continue if not enough location info
+    if (isLocationInfoNeeded()) {
+        label.innerHTML = "Please enter or detect your location.";
+        return;
     }
 
     // AI Prompt
@@ -95,10 +108,11 @@ async function promptYourLocation() {
 
     try {
         const response = await aiResponse(
-        `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/location, this is not a chatbot.\
-        You also do not need to restate the question. Respond like you are talking to the user.\
-        Here's the Latitude & Longitude coordinates: lat="${lat}", long="${long}".\
-        State the user's location & region based on the LatLong coordinates IN ONE SENTENCE.`
+            `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/locationName, this is not a chatbot.\
+            You also do not need to restate the question. Respond like you are talking to the user.\
+            The user is required to input latLong coordinates or a location name, but doesn't have to give both. No need to mention if latLong or locationName isn't provided, only need to if both aren't provided.\
+            Here's the location info: (lat="${lat}", long="${long}"), locationName="${locationName}".\
+            State the user's location & region based on the latLong coordinates, location name, or both, IN ONE SENTENCE.`
         );
 
         const markdownResponse = response ? marked.parse(response) : '';
