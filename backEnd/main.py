@@ -12,7 +12,7 @@ apiKey = os.getenv("API_KEY")
 client = genai.Client(api_key=apiKey)
 
 # CORS allowed origins
-ALLOWED_ORIGINS = ["http://127.0.0.1:5500", "http://localhost:5500", "https://terralytics.edgeone.app"] # Don't keep localhost urls in production
+ALLOWED_ORIGINS = ["http://127.0.0.1:5500", "http://localhost:5500", "https://terralytics.edgeone.app", "https://terralytics-beta.edgeone.app"] # Don't keep localhost urls in production
 
 app = Flask(__name__)
 
