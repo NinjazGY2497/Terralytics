@@ -82,13 +82,19 @@ submitButton.addEventListener("click", function() {
     promptYourLocation();
 })
 
+function isLatLongBlank() {
+    const {lat, long} = locationInfo;
+    return lat == null || lat === '' || long == null || long === '';
+}
+
+function isLocationNameBlank() {
+    const {locationName} = locationInfo;
+    return locationName == null || locationName === '';
+}
+
 // Enough Info? (Ex: does system have lat/long or location name?)
 function isLocationInfoNeeded() {
-    const {lat, long, locationName} = locationInfo;
-    const isLatLongBlank = lat == null || lat === '' || long == null || long === '';
-    const isLocationNameBlank = locationName == null || locationName === '';
-
-    return isLatLongBlank && isLocationNameBlank;
+    return isLatLongBlank() && isLocationNameBlank();
 }
 export { isLocationInfoNeeded };
 
