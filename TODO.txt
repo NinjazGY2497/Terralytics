@@ -1,5 +1,4 @@
 TODO LIST:
-- Custom prompt using coords/location
 - Google maps embed
 - Better prompt injection counter
 - Radius?
