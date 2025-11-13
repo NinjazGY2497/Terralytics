@@ -74,9 +74,17 @@ detectLocationButton.addEventListener("click", function() {
 });
 
 submitButton.addEventListener("click", function() {
-    locationInfo.lat = latInput.value;
-    locationInfo.long = longInput.value;
-    locationInfo.locationName = locationNameInput.value;
+    const newLat = latInput.value;
+    const newLong = longInput.value;
+    const newLocationName = locationNameInput.value;
+
+    if (!isLatLongBlank(newLat, newLong)) {
+        locationInfo.lat = newLat;
+        locationInfo.long = newLong;
+    }
+    if (!isLocationNameBlank(newLocationName)) {
+        locationInfo.locationName = newLocationName;
+    }
     
     showButtonGrid();
     promptYourLocation();
