@@ -74,21 +74,34 @@ detectLocationButton.addEventListener("click", function() {
 });
 
 submitButton.addEventListener("click", function() {
-    locationInfo.lat = latInput.value;
-    locationInfo.long = longInput.value;
-    locationInfo.locationName = locationNameInput.value;
+    const newLat = latInput.value;
+    const newLong = longInput.value;
+    const newLocationName = locationNameInput.value;
+
+    if (!isLatLongBlank(newLat, newLong)) {
+        locationInfo.lat = newLat;
+        locationInfo.long = newLong;
+    }
+    if (!isLocationNameBlank(newLocationName)) {
+        locationInfo.locationName = newLocationName;
+    }
     
     showButtonGrid();
     promptYourLocation();
 })
 
+function isLatLongBlank(lat, long) {
+    return lat == null || lat === '' || long == null || long === '';
+}
+
+function isLocationNameBlank(locationName) {
+    return locationName == null || locationName === '';
+}
+
 // Enough Info? (Ex: does system have lat/long or location name?)
 function isLocationInfoNeeded() {
     const {lat, long, locationName} = locationInfo;
-    const isLatLongBlank = lat == null || lat === '' || long == null || long === '';
-    const isLocationNameBlank = locationName == null || locationName === '';
-
-    return isLatLongBlank && isLocationNameBlank;
+    return isLatLongBlank(lat, long) && isLocationNameBlank(locationName);
 }
 export { isLocationInfoNeeded };
 
