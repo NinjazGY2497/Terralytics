@@ -3,3 +3,4 @@ TODO LIST:
 - Better prompt injection counter
 - Radius?
 - Make button disappear when submitted changes and appear when un-submitted changes for manual location
+- hover over rock to show summary of it
