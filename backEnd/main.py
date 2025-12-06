@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # Logging configuration
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 logFilename = os.path.join(scriptDir, "app.log")
-logging.basicConfig(level=logging.INFO, filename=logFilename, filemode="w", format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.INFO, filename=logFilename, filemode="a", format="%(asctime)s - %(levelname)s - %(message)s")
 load_dotenv()
 
 # Gemini API
