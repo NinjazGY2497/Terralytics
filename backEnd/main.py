@@ -2,14 +2,18 @@ import logging
 from google import genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
+import sys
 import os
 from dotenv import load_dotenv
 
-# Logging configuration
-scriptDir = os.path.dirname(os.path.abspath(__file__))
-logFilename = os.path.join(scriptDir, "app.log")
-logging.basicConfig(level=logging.INFO, filename=logFilename, filemode="a", format="%(asctime)s - %(levelname)s - %(message)s")
+# Logging configuration - Commented Lines are for instead logging to program's own file
+# scriptDir = os.path.dirname(os.path.abspath(__file__))
+# logFilename = os.path.join(scriptDir, "app.log")
+logging.basicConfig(level=logging.INFO, 
+                    # filename=logFilename, 
+                    # filemode="a", 
+                    format="**main.py** - %(levelname)s - %(message)s",
+                    stream=sys.stdout) # Log to stdout in WSGI Servers
 load_dotenv()
 
 # Gemini API
