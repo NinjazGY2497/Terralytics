@@ -1,15 +1,9 @@
-import logging
 from google import genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
 import os
 from dotenv import load_dotenv
 
-# Logging configuration
-scriptDir = os.path.dirname(os.path.abspath(__file__))
-logFilename = os.path.join(scriptDir, "app.log")
-logging.basicConfig(level=logging.INFO, filename=logFilename, filemode="a", format="%(asctime)s - %(levelname)s - %(message)s")
 load_dotenv()
 
 # Gemini API
@@ -17,7 +11,7 @@ try:
     apiKey = os.getenv("API_KEY")
     client = genai.Client(api_key=apiKey)
 except Exception:
-    logging.exception("Failed to initialize Gemini API client.")
+    print(f"**main.py** - ERROR - Failed to initialize Gemini API client.")
     raise
 
 # CORS allowed origins
@@ -34,9 +28,9 @@ def getAIResponse():
         promptData = request.get_json()
         model = promptData.get("model", "gemini-2.5-flash") # Default is gemini-2.5-flash
         prompt = promptData.get("prompt")
-        logging.info("Prompt Data: %s", promptData)
+        print(f"**main.py** - INFO - Prompt Data: {promptData}")
     except Exception:
-        logging.exception(f"Failed to parse request JSON: {promptData}")
+        print(f"**main.py** - ERROR - Failed to parse request JSON: {promptData}")
         raise
 
     try:
@@ -44,9 +38,9 @@ def getAIResponse():
             model=model,
             contents=prompt
         )
-        logging.info("AI Response: %s", response.text)
+        print(f"**main.py** - INFO - AI Response: {response.text}")
     except Exception:
-        logging.exception("Failed to get response from Gemini API.")
+        print(f"**main.py** - ERROR - Failed to get response from Gemini API.")
         raise
 
     return jsonify({"response": response.text})
