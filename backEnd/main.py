@@ -1,4 +1,4 @@
-from google import genai
+from groq import Groq
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
@@ -6,12 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Gemini API
+# Groq API
 try:
-    apiKey = os.getenv("API_KEY")
-    client = genai.Client(api_key=apiKey)
+    GROQ_KEY = os.getenv("GROQ_KEY")
+    client = Groq(api_key=GROQ_KEY)
 except Exception:
-    print(f"**main.py** - ERROR - Failed to initialize Gemini API client.")
+    print(f"**main.py** - ERROR - Failed to initialize Groq API client.")
     raise
 
 # CORS allowed origins
@@ -22,11 +22,42 @@ app = Flask(__name__)
 # Whitelist sites specified
 CORS(app, resources={r"/ai-response": {"origins": ALLOWED_ORIGINS}})
 
+def requestGroq(userPrompt):
+    SYSTEM_PROMPT = ("You are a specialized Geological Data Engine. Your role is to provide simplified, highly accurate information about geology and rocks based on geographic data.\n\n"
+                    "RULES:\n"
+                    "1. RESPONSE FORMAT: Markdown, but don't use tables. Never include introductory text, conversational filler, or concluding remarks.\n"
+                    "2. MISSING DATA: The user is required to input latLong coordinates or a location name, but doesn't have to give both. No need to mention if latLong or locationName is blank, only need to if both are blank.\n"
+                    "3. Keep your responses short and simplified")
+
+    try:
+        completion = client.chat.completions.create(
+            model="openai/gpt-oss-120b",
+            messages=[
+                {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT
+                },
+                {
+                    "role": "user",
+                    "content": userPrompt
+                }
+            ],
+            temperature=0.2,
+            max_completion_tokens=350,
+            reasoning_effort="low"
+        )
+        response = completion.choices[0].message.content
+        print(f"**main.py** - INFO - Groq Response: {response}")
+        return response
+    
+    except Exception:
+        print(f"**main.py** - ERROR - Failed to get response from Groq API.")
+        raise
+
 @app.route("/ai-response", methods=["POST"])
 def getAIResponse():
     try:
         promptData = request.get_json()
-        model = promptData.get("model", "gemini-2.5-flash") # Default is gemini-2.5-flash
         prompt = promptData.get("prompt")
         print(f"**main.py** - INFO - Prompt Data: {promptData}")
     except Exception:
@@ -34,16 +65,13 @@ def getAIResponse():
         raise
 
     try:
-        response = client.models.generate_content(
-            model=model,
-            contents=prompt
-        )
-        print(f"**main.py** - INFO - AI Response: {response.text}")
+        response = requestGroq(prompt)
+        print(f"**main.py** - INFO - Groq Response: {response}")
     except Exception:
-        print(f"**main.py** - ERROR - Failed to get response from Gemini API.")
+        print(f"**main.py** - ERROR - Failed to get response from Groq API.")
         raise
 
-    return jsonify({"response": response.text})
+    return jsonify({"response": response})
 
 if __name__ == "__main__":
     app.run(port="2497")

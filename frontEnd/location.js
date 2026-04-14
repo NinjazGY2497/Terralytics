@@ -121,13 +121,10 @@ async function promptYourLocation() {
 
     try {
         const response = await aiResponse(
-            `Remember that this is for a project that will use you for one response only each time the user enters/detects a new latLong/locationName, this is not a chatbot.\
-            You also do not need to restate the question. Respond like you are talking to the user.\
-            The user is required to input latLong coordinates or a location name, but doesn't have to give both. No need to mention if latLong or locationName isn't provided, only need to if both aren't provided.\
-            Here's the location info: (lat="${lat}", long="${long}"), locationName="${locationName}".\
-            State the user's location & region based on the latLong coordinates, location name, or both, IN ONE SENTENCE.`
+            `State the user's location & region based on the latLong coordinates, location name, or both, IN ONE SENTENCE.
+            - Coordinates: (lat="${lat}", long="${long}")
+            - Location Name: "${locationName}"`
         );
-
         const markdownResponse = response ? marked.parse(response) : '';
         label.innerHTML = markdownResponse || "No response from Gemini.";
 
