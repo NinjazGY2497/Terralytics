@@ -47,7 +47,6 @@ def requestGroq(userPrompt):
             reasoning_effort="low"
         )
         response = completion.choices[0].message.content
-        print(f"**main.py** - INFO - Groq Response: {response}")
         return response
     
     except Exception:
@@ -64,12 +63,8 @@ def getAIResponse():
         print(f"**main.py** - ERROR - Failed to parse request JSON: {promptData}")
         raise
 
-    try:
-        response = requestGroq(prompt)
-        print(f"**main.py** - INFO - Groq Response: {response}")
-    except Exception:
-        print(f"**main.py** - ERROR - Failed to get response from Groq API.")
-        raise
+    response = requestGroq(prompt)
+    print(f"**main.py** - INFO - Groq Response: {response}")
 
     return jsonify({"response": response})
 
