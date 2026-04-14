@@ -30,7 +30,7 @@ buttonGrid.forEach(button => {
         - Coordinates: (lat="${lat}", long="${long}")
         - Location Name: "${locationName}"
 
-        Prompt: Info on Top 5 Most Valuable Rocks and Where to Find Them in my area`
+        Prompt: Info on ${topic} in my area`
       );
 
       const markdownResponse = response ? marked.parse(response) : '';
